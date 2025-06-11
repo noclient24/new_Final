@@ -239,7 +239,7 @@ const Show_Task = () => {
                 {/* Action Buttons - Only show when not editing */}
                 {editingTask !== task._id && (
                   <div className="px-6 pb-4 flex justify-end space-x-3">
-                    <button
+                    {/* <button
                       onClick={() => handleEditClick(task)}
                       className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-md transition-colors flex items-center"
                     >
@@ -247,7 +247,7 @@ const Show_Task = () => {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                       </svg>
                       Edit
-                    </button>
+                    </button> */}
                     <button
                       onClick={() => handleDelete(task._id)}
                       className="px-4 py-2 bg-red-600 hover:bg-red-500 text-white rounded-md transition-colors flex items-center"
