@@ -82,13 +82,6 @@ const Show_Task = () => {
     setEditingTask(null);
   };
 
-  // Add new task function
-  const handleAddNew = () => {
-    // You can implement this to show a form for adding new task
-    // For now we'll just show a toast message
-    toast.info("Add new task functionality would go here");
-  };
-
   useEffect(() => {
     if (context.user?._id) {
       LoadTask(context.user._id);
@@ -104,7 +97,14 @@ const Show_Task = () => {
           <h1 className="text-2xl md:text-3xl font-bold text-white">
             Your Tasks
           </h1>
-         
+          <Link href="../add_Task">
+            <button className="px-4 py-2 bg-green-600 hover:bg-green-500 text-white rounded-md transition-colors flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
+              </svg>
+              Add New Task
+            </button>
+          </Link>
         </div>
 
         {/* Loading State */}
@@ -125,14 +125,11 @@ const Show_Task = () => {
         {!loading && !error && tasks.length === 0 && (
           <div className="bg-gray-800 rounded-lg shadow p-8 text-center">
             <p className="text-gray-400 text-lg">No tasks found</p>
-           <Link href="../add_Task">
-            <button
-              onClick={handleAddNew}
-              className="mt-4 px-4 py-2 bg-green-600 hover:bg-green-500 text-white rounded-md transition-colors"
-            >
-              Add Your First Task
-            </button>
-           </Link>
+            <Link href="../add_Task">
+              <button className="mt-4 px-4 py-2 bg-green-600 hover:bg-green-500 text-white rounded-md transition-colors">
+                Add Your First Task
+              </button>
+            </Link>
           </div>
         )}
 
@@ -142,36 +139,45 @@ const Show_Task = () => {
             {tasks.map((task) => (
               <div
                 key={task._id}
-                className="bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow flex flex-col"
+                className="bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow flex flex-col border border-gray-700"
               >
                 <div className="p-6 flex-grow">
                   {editingTask === task._id ? (
                     <div className="space-y-4">
-                      <input
-                        type="text"
-                        name="tittle"
-                        value={editForm.tittle}
-                        onChange={handleEditChange}
-                        className="w-full p-2 bg-gray-700 text-white rounded border border-gray-600 focus:border-blue-500 focus:outline-none"
-                        placeholder="Task title"
-                      />
-                      <textarea
-                        name="content"
-                        value={editForm.content}
-                        onChange={handleEditChange}
-                        className="w-full p-2 bg-gray-700 text-white rounded border border-gray-600 focus:border-blue-500 focus:outline-none"
-                        rows="3"
-                        placeholder="Task description"
-                      />
-                      <select
-                        name="status"
-                        value={editForm.status}
-                        onChange={handleEditChange}
-                        className="w-full p-2 bg-gray-700 text-white rounded border border-gray-600 focus:border-blue-500 focus:outline-none"
-                      >
-                        <option value="pending">Pending</option>
-                        <option value="completed">Completed</option>
-                      </select>
+                      <div>
+                        <label className="block text-blue-400 text-sm mb-1 font-bold uppercase tracking-wider">Task Title</label>
+                        <input
+                          type="text"
+                          name="tittle"
+                          value={editForm.tittle}
+                          onChange={handleEditChange}
+                          className="w-full p-2 bg-gray-700 text-white rounded border border-gray-600 focus:border-blue-500 focus:outline-none"
+                          placeholder="Enter task title"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-blue-400 text-sm mb-1 font-bold uppercase tracking-wider">Task Description</label>
+                        <textarea
+                          name="content"
+                          value={editForm.content}
+                          onChange={handleEditChange}
+                          className="w-full p-2 bg-gray-700 text-white rounded border border-gray-600 focus:border-blue-500 focus:outline-none"
+                          rows="3"
+                          placeholder="Enter task description"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-blue-400 text-sm mb-1 font-bold uppercase tracking-wider">Status</label>
+                        <select
+                          name="status"
+                          value={editForm.status}
+                          onChange={handleEditChange}
+                          className="w-full p-2 bg-gray-700 text-white rounded border border-gray-600 focus:border-blue-500 focus:outline-none"
+                        >
+                          <option value="pending">Pending</option>
+                          <option value="completed">Completed</option>
+                        </select>
+                      </div>
                       <div className="flex justify-end space-x-2 pt-2">
                         <button
                           onClick={handleCancelEdit}
@@ -189,27 +195,42 @@ const Show_Task = () => {
                     </div>
                   ) : (
                     <>
-                      <div className="flex justify-between items-start mb-2">
-                        <h3 className="text-lg font-semibold text-white">
-                          {task.tittle}
-                        </h3>
+                      <div className="flex justify-between items-start mb-4">
+                        <div>
+                          <h2 className="text-blue-400 text-sm font-bold uppercase tracking-wider">Task Title</h2>
+                          <h3 className="text-lg font-semibold text-white mt-1">
+                            {task.tittle}
+                          </h3>
+                        </div>
                         <span
-                          className={`px-2 py-1 text-xs font-medium rounded-full ${
+                          className={`px-2 py-1 text-xs font-bold rounded-full ${
                             task.status === "completed"
-                              ? "bg-green-100 text-green-800"
-                              : "bg-yellow-100 text-yellow-800"
+                              ? "bg-green-900 text-green-200"
+                              : "bg-yellow-900 text-yellow-200"
                           }`}
                         >
                           {task.status}
                         </span>
                       </div>
-                      <p className="text-gray-400 mb-4 whitespace-pre-wrap">
-                        {task.content}
-                      </p>
-                      <div className="flex justify-between items-center text-sm mt-auto">
-                        <span className="text-gray-500">
-                          {new Date(task.Date).toLocaleDateString()}
-                        </span>
+                      
+                      <div className="mb-4">
+                        <h2 className="text-blue-400 text-sm font-bold uppercase tracking-wider">Description</h2>
+                        <p className="text-gray-300 mt-1 whitespace-pre-wrap">
+                          {task.content}
+                        </p>
+                      </div>
+                      
+                      <div className="mt-auto pt-4 border-t border-gray-700">
+                        <h2 className="text-blue-400 text-sm font-bold uppercase tracking-wider">Posted On</h2>
+                        <p className="text-gray-400 mt-1">
+                          {new Date(task.Date).toLocaleDateString('en-US', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                          })}
+                        </p>
                       </div>
                     </>
                   )}
